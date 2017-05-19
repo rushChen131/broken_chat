@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <classPathEntry
+            location="D:\code\chat\src\libs/mysql-connector-java-5.1.6-bin.jar"/>
+    <context id="my" targetRuntime="MyBatis3">
+        <!-- 给model实现序列化 -->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
+            <property name="searchString" value="Example$"/>
+            <property name="replaceString" value="Criteria"/>
+        </plugin>
+        <plugin type="org.mybatis.generator.plugins.MybatisCriteriaPlugin" >
+            <!-- 如果 CommonMapper.xml 文件不存在，设置为 false，将自动生成  -->
+            <property name="commonFile" value="true"/>
+        </plugin>
+        <!-- 删除代码中带有代码生成器的注释信息  -->
+        <commentGenerator>
+            <!-- false时打开时间标志，true时关闭 -->
+            <property name="suppressDate" value="false"/>
+            <!-- false时打开注释，true时关闭注释 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/chat?characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull"
+                        userId="root" password="chen13122441" />
+
+        <javaModelGenerator targetPackage="com.rush.chat.models"
+                            targetProject="D:\code\chat\src/main/java">
+            <property name="enableSubPackages" value="false"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="mapping"
+                         targetProject="D:\code\chat\src/main/resources">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <javaClientGenerator targetPackage="com.rush.chat.dao.mapper"
+                             targetProject="D:\code\chat\src/main/java" type="XMLMAPPER">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+
+     <table tableName="t_register" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
+            <generatedKey column="id" sqlStatement="MySql" identity="true" />
+        </table>
+
+
+    </context>
+</generatorConfiguration>

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rush.chat.dao.mapper.TRegisterMapper">
+  <resultMap id="BaseResultMap" type="com.rush.chat.models.TRegister">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="channel" jdbcType="VARCHAR" property="channel" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="user_code" jdbcType="VARCHAR" property="userCode" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="pwd" jdbcType="VARCHAR" property="pwd" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="head_portrait" jdbcType="VARCHAR" property="headPortrait" />
+    <result column="safety_code" jdbcType="VARCHAR" property="safetyCode" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, channel, create_time, user_code, nick_name, pwd, sex, head_portrait, safety_code
+  </sql>
+  <sql id="Example_Where_Clause">
+    <trim prefix="where" prefixOverrides="and|or">
+      <if test="params.channel != null">
+         and channel = #{params.channel,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createTime != null">
+         and create_time = #{params.createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.userCode != null">
+         and user_code = #{params.userCode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.nickName != null">
+         and nick_name = #{params.nickName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.pwd != null">
+         and pwd = #{params.pwd,jdbcType=VARCHAR}
+      </if>
+      <if test="params.sex != null">
+         and sex = #{params.sex,jdbcType=VARCHAR}
+      </if>
+      <if test="params.headPortrait != null">
+         and head_portrait = #{params.headPortrait,jdbcType=VARCHAR}
+      </if>
+      <if test="params.safetyCode != null">
+         and safety_code = #{params.safetyCode,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByParams" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_register
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectCountByParams" resultType="int">
+    select count(*) from t_register
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectListByParams" resultMap="BaseResultMap" resultType="list">
+    select
+    <include refid="Base_Column_List" />
+    from t_register
+    <include refid="Example_Where_Clause" />
+    <if test="orderParam != null">
+      order by ${orderParam}
+    </if>
+    <include refid="common.Pagination_Limit" />
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_register
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_register
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.rush.chat.models.TRegister">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_register (channel, create_time, user_code, 
+      nick_name, pwd, sex, 
+      head_portrait, safety_code)
+    values (#{channel,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{userCode,jdbcType=VARCHAR}, 
+      #{nickName,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+      #{headPortrait,jdbcType=VARCHAR}, #{safetyCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rush.chat.models.TRegister">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_register
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="channel != null">
+        channel,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="userCode != null">
+        user_code,
+      </if>
+      <if test="nickName != null">
+        nick_name,
+      </if>
+      <if test="pwd != null">
+        pwd,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="headPortrait != null">
+        head_portrait,
+      </if>
+      <if test="safetyCode != null">
+        safety_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="channel != null">
+        #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userCode != null">
+        #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null">
+        #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="headPortrait != null">
+        #{headPortrait,jdbcType=VARCHAR},
+      </if>
+      <if test="safetyCode != null">
+        #{safetyCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rush.chat.models.TRegister">
+    update t_register
+    <set>
+      <if test="channel != null">
+        channel = #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userCode != null">
+        user_code = #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null">
+        pwd = #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="headPortrait != null">
+        head_portrait = #{headPortrait,jdbcType=VARCHAR},
+      </if>
+      <if test="safetyCode != null">
+        safety_code = #{safetyCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rush.chat.models.TRegister">
+    update t_register
+    set channel = #{channel,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      user_code = #{userCode,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      pwd = #{pwd,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      head_portrait = #{headPortrait,jdbcType=VARCHAR},
+      safety_code = #{safetyCode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

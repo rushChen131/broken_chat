@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rush.chat.dao.mapper.TMessageMapper">
+  <resultMap id="BaseResultMap" type="com.rush.chat.models.TMessage">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="message_type" jdbcType="VARCHAR" property="messageType" />
+    <result column="message_value" jdbcType="VARCHAR" property="messageValue" />
+    <result column="from_user" jdbcType="VARCHAR" property="fromUser" />
+    <result column="from_user_name" jdbcType="VARCHAR" property="fromUserName" />
+    <result column="to_user" jdbcType="VARCHAR" property="toUser" />
+    <result column="to_user_name" jdbcType="VARCHAR" property="toUserName" />
+    <result column="message_date" jdbcType="TIMESTAMP" property="messageDate" />
+    <result column="seq_no" jdbcType="VARCHAR" property="seqNo" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, message_type, message_value, from_user, from_user_name, to_user, to_user_name, 
+    message_date, seq_no, nick_name
+  </sql>
+  <sql id="Example_Where_Clause">
+    <trim prefix="where" prefixOverrides="and|or">
+      <if test="params.messageType != null">
+         and message_type = #{params.messageType,jdbcType=VARCHAR}
+      </if>
+      <if test="params.messageValue != null">
+         and message_value = #{params.messageValue,jdbcType=VARCHAR}
+      </if>
+      <if test="params.fromUser != null">
+         and from_user = #{params.fromUser,jdbcType=VARCHAR}
+      </if>
+      <if test="params.fromUserName != null">
+         and from_user_name = #{params.fromUserName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.toUser != null">
+         and to_user = #{params.toUser,jdbcType=VARCHAR}
+      </if>
+      <if test="params.toUserName != null">
+         and to_user_name = #{params.toUserName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.messageDate != null">
+         and message_date = #{params.messageDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.seqNo != null">
+         and seq_no = #{params.seqNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.nickName != null">
+         and nick_name = #{params.nickName,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByParams" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_message
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectCountByParams" resultType="int">
+    select count(*) from t_message
+    <include refid="Example_Where_Clause" />
+  </select>
+  <select id="selectListByParams" resultMap="BaseResultMap" resultType="list">
+    select
+    <include refid="Base_Column_List" />
+    from t_message
+    <include refid="Example_Where_Clause" />
+    <if test="orderParam != null">
+      order by ${orderParam}
+    </if>
+    <include refid="common.Pagination_Limit" />
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_message
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_message
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.rush.chat.models.TMessage">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_message (message_type, message_value, from_user, 
+      from_user_name, to_user, to_user_name, 
+      message_date, seq_no, nick_name
+      )
+    values (#{messageType,jdbcType=VARCHAR}, #{messageValue,jdbcType=VARCHAR}, #{fromUser,jdbcType=VARCHAR}, 
+      #{fromUserName,jdbcType=VARCHAR}, #{toUser,jdbcType=VARCHAR}, #{toUserName,jdbcType=VARCHAR}, 
+      #{messageDate,jdbcType=TIMESTAMP}, #{seqNo,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.rush.chat.models.TMessage">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="messageType != null">
+        message_type,
+      </if>
+      <if test="messageValue != null">
+        message_value,
+      </if>
+      <if test="fromUser != null">
+        from_user,
+      </if>
+      <if test="fromUserName != null">
+        from_user_name,
+      </if>
+      <if test="toUser != null">
+        to_user,
+      </if>
+      <if test="toUserName != null">
+        to_user_name,
+      </if>
+      <if test="messageDate != null">
+        message_date,
+      </if>
+      <if test="seqNo != null">
+        seq_no,
+      </if>
+      <if test="nickName != null">
+        nick_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="messageType != null">
+        #{messageType,jdbcType=VARCHAR},
+      </if>
+      <if test="messageValue != null">
+        #{messageValue,jdbcType=VARCHAR},
+      </if>
+      <if test="fromUser != null">
+        #{fromUser,jdbcType=VARCHAR},
+      </if>
+      <if test="fromUserName != null">
+        #{fromUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="toUser != null">
+        #{toUser,jdbcType=VARCHAR},
+      </if>
+      <if test="toUserName != null">
+        #{toUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="messageDate != null">
+        #{messageDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="seqNo != null">
+        #{seqNo,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rush.chat.models.TMessage">
+    update t_message
+    <set>
+      <if test="messageType != null">
+        message_type = #{messageType,jdbcType=VARCHAR},
+      </if>
+      <if test="messageValue != null">
+        message_value = #{messageValue,jdbcType=VARCHAR},
+      </if>
+      <if test="fromUser != null">
+        from_user = #{fromUser,jdbcType=VARCHAR},
+      </if>
+      <if test="fromUserName != null">
+        from_user_name = #{fromUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="toUser != null">
+        to_user = #{toUser,jdbcType=VARCHAR},
+      </if>
+      <if test="toUserName != null">
+        to_user_name = #{toUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="messageDate != null">
+        message_date = #{messageDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="seqNo != null">
+        seq_no = #{seqNo,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rush.chat.models.TMessage">
+    update t_message
+    set message_type = #{messageType,jdbcType=VARCHAR},
+      message_value = #{messageValue,jdbcType=VARCHAR},
+      from_user = #{fromUser,jdbcType=VARCHAR},
+      from_user_name = #{fromUserName,jdbcType=VARCHAR},
+      to_user = #{toUser,jdbcType=VARCHAR},
+      to_user_name = #{toUserName,jdbcType=VARCHAR},
+      message_date = #{messageDate,jdbcType=TIMESTAMP},
+      seq_no = #{seqNo,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
